@@ -7,7 +7,7 @@ import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
 import { NavSecondary } from "./nav-secondary"
 import { NavUser } from "./nav-user"
-
+import Image from "next/image"
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +20,13 @@ import {
 
 import { useAuth } from "@/hooks/useAuth"
 import { useAuthStore } from "@/state/useAuthStore"
+import { personas } from "@/config/personas"
+
+const personaItems = personas.map(persona => ({
+  title: persona.name,
+  url: "#",
+  id: persona.id,
+}))
 
 const data = {
   user: {
@@ -32,24 +39,7 @@ const data = {
       title: "Persona",
       url: "#",
       icon: Bot,
-      items: [
-        {
-          title: "BestFriend",
-          url: "#",
-        },
-        {
-          title: "Friend",
-          url: "#",
-        },
-        {
-          title: "Mentor",
-          url: "#",
-        },
-        {
-          title: "psychiatrist",
-          url: "#",
-        },
-      ],
+      items: personaItems,
     },
     {
       title: "Documentation",
@@ -134,10 +124,19 @@ const avatar = "/avatars/shadcn.jpg"; // Keep avatar as before or update if you 
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                  {/* <Command className="size-4" /> */}
+                  <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201171274909-6qAc0l9yFtnmWK0yfTDOWwiPgp4bEd.png"
+                  alt="Graphyn Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                  priority
+                  unoptimized
+                />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">MindCareBot Inc</span>
+                  <span className="truncate font-semibold">Eunoia Inc</span>
                   <span className="truncate text-xs">akshay Enterprise</span>
                 </div>
               </a>

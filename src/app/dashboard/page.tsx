@@ -15,7 +15,12 @@ import {
 } from '@/components/ui/sidebar'
 import { ModeToggle } from '@/themes/mode-toggle'
 import ChatInterface from '@/components/ChatInterface'
+import { PersonaDisplay } from '@/components/PersonaDisplay'
+import { usePersona } from '@/hooks/usePersona'
+
 export default function Dashboard() {
+  const {selectedPersona} = usePersona();
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -28,7 +33,7 @@ export default function Dashboard() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
-                    Building Your Application
+                    {selectedPersona.name}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
@@ -42,16 +47,10 @@ export default function Dashboard() {
                 <ModeToggle/>
           </div>
         </header>
-        {/* <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-        </div> */}
-        {/* <h1 className="py-5 px-5">Hello World</h1> */}
-        <ChatInterface/>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <PersonaDisplay />
+          <ChatInterface/>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

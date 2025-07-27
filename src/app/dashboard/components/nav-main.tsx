@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight, type LucideIcon } from "lucide-react"
+import { usePersonaStore } from "@/state/personaStore"
 
 import {
   Collapsible,
@@ -30,9 +31,16 @@ export function NavMain({
     items?: {
       title: string
       url: string
+      id?: string
     }[]
   }[]
 }) {
+  const { selectedPersona, setSelectedPersonaById } = usePersonaStore()
+
+  const handlePersonaClick = (personaId: string) => {
+    setSelectedPersonaById(personaId)
+  }
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Conversations</SidebarGroupLabel>
@@ -58,10 +66,20 @@ export function NavMain({
                     <SidebarMenuSub>
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
-                          <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </a>
+                          <SidebarMenuSubButton 
+                            asChild={!subItem.id}
+                            onClick={subItem.id ? () => handlePersonaClick(subItem.id!) : undefined}
+                            className={subItem.id && selectedPersona.id === subItem.id ? "bg-accent text-accent-foreground" : ""}
+                          >
+                            {subItem.id ? (
+                              <button className="w-full text-left">
+                                <span>{subItem.title}</span>
+                              </button>
+                            ) : (
+                              <a href={subItem.url}>
+                                <span>{subItem.title}</span>
+                              </a>
+                            )}
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}

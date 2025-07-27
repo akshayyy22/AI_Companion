@@ -7,6 +7,7 @@ import { AppProvider } from "@/providers/AppProvider";
 // import { Button } from '@/components/ui/button'
 // import { useAuth } from '@/hooks/useAuth'
 import Dashboard from "./dashboard/page";
+import { Home } from "@/components/Homepage";
 
 export default function HomePage() {
   return (
@@ -34,6 +35,7 @@ function ProtectedContent() {
   return (
       <>
       <Dashboard/>
+      {/* <Home/> */}
       </>
   );
 }
