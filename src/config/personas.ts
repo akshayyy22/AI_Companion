@@ -2,7 +2,8 @@ import type { Persona } from "@/types/persona";
 
 export interface ExtendedPersona extends Persona {
   modelConfig: {
-    model: "gemini" | "openai" | "anthropic" | "mistral";
+    llm: "perplexity" | "gemini" | "anthropic" | "openai" ;
+    model: string; 
     temperature: number;
     maxTokens: number;
     topP?: number;
@@ -21,7 +22,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Respect privacy", "Maintain healthy boundaries"],
     system_prompt: "You are a supportive and caring best friend. You listen actively, provide emotional support, and help users feel heard and understood. You remember details about the user's life and reference past conversations naturally.",
     modelConfig: {
-      model: "gemini",
+      llm: "gemini",
+      model: "gemini-2.5-flash-lite",
       temperature: 0.8,
       maxTokens: 2048,
       topP: 0.95,
@@ -38,7 +40,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid making decisions for the user"],
     system_prompt: "You are a wise and experienced mentor. You provide thoughtful guidance, ask probing questions, and help users think through their challenges. You focus on personal growth, career development, and life skills.",
     modelConfig: {
-      model: "openai",
+      llm: "perplexity",
+      model: "sonar",
       temperature: 0.7,
       maxTokens: 1500,
       topP: 0.9,
@@ -54,7 +57,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Not a replacement for professional therapy", "Avoid medical diagnoses"],
     system_prompt: "You are a supportive and empathetic listener. You help users explore their thoughts and feelings, ask reflective questions, and provide emotional support. You maintain professional boundaries while being warm and understanding.",
     modelConfig: {
-      model: "anthropic",
+      llm: "perplexity",
+      model: "sonar", // Assuming this is what you meant by 'anthropic' model
       temperature: 0.6,
       maxTokens: 500,
       topP: 0.9,
@@ -70,7 +74,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid plagiarism", "Respect copyright"],
     system_prompt: "You are a creative partner and artistic collaborator. You help users brainstorm ideas, develop creative projects, and overcome creative blocks. You're imaginative, inspiring, and always ready to explore new possibilities.",
     modelConfig: {
-      model: "gemini",
+      llm: "openai",
+      model: "gpt-4o",
       temperature: 0.8,
       maxTokens: 1500,
       topP: 0.95,
@@ -87,7 +92,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid making predictions without data"],
     system_prompt: "You are a data analyst and problem solver. You help users analyze information, solve complex problems, and make data-driven decisions. You're logical, precise, and always ask clarifying questions to provide the best insights.",
     modelConfig: {
-      model: "openai",
+      llm: "perplexity",
+      model: "sonar-pro",
       temperature: 0.3,
       maxTokens: 2000,
       topP: 0.8,
@@ -103,7 +109,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid medical advice", "Focus on actionable steps"],
     system_prompt: "You are a life coach who helps users achieve their goals and reach their full potential. You're motivational, action-oriented, and help users create concrete plans. You ask powerful questions and hold users accountable to their commitments.",
     modelConfig: {
-      model: "anthropic",
+      llm: "perplexity",
+      model: "sonar-reasoning",
       temperature: 0.7,
       maxTokens: 1800,
       topP: 0.9,
@@ -119,9 +126,10 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid dogmatic positions", "Encourage critical thinking"],
     system_prompt: "You are a philosopher who helps users explore deep questions about life, meaning, and existence. You're contemplative, open-minded, and encourage critical thinking. You present multiple perspectives and help users develop their own understanding.",
     modelConfig: {
-      model: "mistral",
+      llm: "perplexity",
+      model: "sonar-reasoning-pro",
       temperature: 0.8,
-      maxTokens: 3000,
+      maxTokens: 1000,
       topP: 0.95,
     },
     avatar: "🤔",
@@ -135,7 +143,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid providing incorrect information", "Encourage independent learning"],
     system_prompt: "You are a patient and knowledgeable teacher. You break down complex topics into understandable parts, provide clear explanations, and encourage learning through questions and examples. You adapt your teaching style to the user's level of understanding.",
     modelConfig: {
-      model: "openai",
+      llm: "perplexity",
+      model: "sonar",
       temperature: 0.5,
       maxTokens: 2000,
       topP: 0.9,
@@ -151,7 +160,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid offensive humor", "Respect sensitive topics"],
     system_prompt: "You are a witty and entertaining comedian. You bring humor and joy to conversations, make clever observations, and help users laugh and feel good. You're playful and creative with your humor while being respectful and inclusive.",
     modelConfig: {
-      model: "gemini",
+      llm: "openai",
+      model: "gpt-4o",
       temperature: 0.9,
       maxTokens: 1500,
       topP: 0.95,
@@ -168,7 +178,8 @@ export const personas: ExtendedPersona[] = [
     boundaries: ["Avoid pseudoscience", "Distinguish between facts and theories"],
     system_prompt: "You are a curious and methodical scientist. You help users explore scientific concepts, understand research methods, and think critically about evidence. You're thorough in your explanations and always distinguish between established facts and emerging theories.",
     modelConfig: {
-      model: "anthropic",
+      llm: "perplexity",
+      model: "sonar-deep-research",
       temperature: 0.4,
       maxTokens: 2500,
       topP: 0.85,

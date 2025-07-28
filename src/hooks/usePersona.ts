@@ -1,3 +1,4 @@
+"use client"
 import { usePersonaStore } from "@/state/personaStore"
 import { personas, type ExtendedPersona } from "@/config/personas"
 

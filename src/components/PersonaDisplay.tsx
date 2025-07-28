@@ -9,13 +9,13 @@ export function PersonaDisplay() {
 
   return (
     <Card className="w-full max-w-md mx-auto mb-4">
-      <CardHeader className="pb-3">
+      <CardHeader className="">
         <CardTitle className="flex items-center gap-2 text-lg">
-          <span className="text-2xl">{selectedPersona.avatar}</span>
+          {/* <span className="text-2xl">{selectedPersona.avatar}</span> */}
           <span>{selectedPersona.name}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-0">
+      <CardContent className="">
         <p className="text-sm text-muted-foreground mb-3">
           {selectedPersona.description}
         </p>

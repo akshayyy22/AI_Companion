@@ -65,7 +65,7 @@ export default function ChatInterface() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages, isTyping, isStreaming])
+  }, [messages, isTyping, isStreaming ])
 
   useEffect(() => {
     const textarea = textareaRef.current
@@ -105,7 +105,7 @@ export default function ChatInterface() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: userMessage.content,
-          persona: selectedPersona,
+          selectedPersonaId: selectedPersona.id, // Changed from persona: selectedPersona
         }),
         signal: abortControllerRef.current?.signal,
       })
@@ -208,16 +208,18 @@ export default function ChatInterface() {
         setIsStreaming(true)
         await handleStreamingResponse(userMessage)
       } else {
+        const conversationHistoryToSend: Array<{ role: "user" | "assistant"; content: string }> = messages.map(({ content, sender }) => ({
+          role: sender === "user" ? "user" : "assistant",
+          content,
+        }));
+
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: userMessage.content,
-            persona: selectedPersona,
-            conversationHistory: messages.map(({ content, sender }) => ({
-              role: sender === "user" ? "user" : "assistant",
-              content,
-            })),
+            selectedPersonaId: selectedPersona.id, // Changed from persona: selectedPersona
+            conversationHistory: conversationHistoryToSend,
           }),
           signal: abortControllerRef.current.signal,
         })

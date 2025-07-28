@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, ChatSession } from "@google/generative-ai";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, ChatSession, Content } from "@google/generative-ai";
 
 // Initialize the Gemini API client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
@@ -6,7 +6,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 // Type definitions for better type safety
 export interface ChatMessage {
   role: "user" | "model";
-  parts: string[];
+  parts: Array<{ text: string }>;
 }
 
 export interface ChatResponse {
@@ -24,6 +24,8 @@ export interface ChatOptions {
   topP?: number;
   maxOutputTokens?: number;
   systemPrompt?: string;
+  history?: ChatMessage[];
+  model?: string; // Add model to ChatOptions
 }
 
 /**
@@ -31,7 +33,7 @@ export interface ChatOptions {
  */
 export function createChatSession(options: ChatOptions = {}) {
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash-exp", 
+    model: options.model ?? "gemini-2.0-flash-exp",
     generationConfig: {
       temperature: options.temperature ?? 0.7,
       topK: options.topK ?? 40,
@@ -58,8 +60,16 @@ export function createChatSession(options: ChatOptions = {}) {
     ],
   });
 
+  // Map ChatMessage history to Gemini Content history
+  const mappedHistory: Content[] = (options.history || []).map(msg => ({
+    role: msg.role,
+    parts: msg.parts.map(part => ({
+      text: part.text, // Assuming part is always { text: string }
+    })),
+  }));
+
   return model.startChat({
-    history: [],
+    history: mappedHistory,
     generationConfig: {
       temperature: options.temperature ?? 0.7,
       topK: options.topK ?? 40,
@@ -133,7 +143,8 @@ export async function* streamChatResponse(
         yield chunkText;
       }
     }
-  } catch (error) {
+  }
+   catch (error) {
     console.error("Gemini Streaming Error:", error);
     throw new Error(`Failed to stream response from Gemini: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }

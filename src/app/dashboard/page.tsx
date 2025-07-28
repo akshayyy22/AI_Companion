@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from './components/app-sidebar'
 import {
   Breadcrumb,
@@ -20,7 +21,6 @@ import { usePersona } from '@/hooks/usePersona'
 
 export default function Dashboard() {
   const {selectedPersona} = usePersona();
-
   return (
     <SidebarProvider>
       <AppSidebar />
