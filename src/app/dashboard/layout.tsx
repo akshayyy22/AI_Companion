@@ -4,7 +4,7 @@ import { useAuthStore } from "@/state/useAuthStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AppProvider } from "@/providers/AppProvider";
-
+import { Skeleton } from "@/components/ui/skeleton";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AppProvider>
@@ -23,7 +23,8 @@ function ProtectedContent({ children }: { children: React.ReactNode }) {
     }
   }, [session, loading, router]);
 
-  if (loading || !session) return null;
+  if (loading) return <Skeleton />;
+if (!session) return null;
 
   return <>{children}</>;
 }
